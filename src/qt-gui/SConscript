@@ -1,0 +1,10 @@
+Import('env')
+qt_gui = env.Clone()
+
+qt_gui.Tool('qt4')
+
+qt_gui.EnableQt4Modules(['QtGui',
+                         'QtCore',
+                         'QtOpenGL'], debug=False)
+
+qt_gui.Program('laniidae', Glob('*.cpp'), LIBS='liblaniidae', LIBPATH='../liblaniidae')
