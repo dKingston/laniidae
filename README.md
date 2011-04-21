@@ -34,9 +34,8 @@ conducted in the future.
 INSTALLATION
 ------------
 
-You need the SCons build system.  Due to laniidae being a cross-platform
-emulator, SCons is portable enough and simple to write it, hence why GNU
-autotools would be useless in this case.  You may download and install SCons at
+You need the SCons build system.  laniidae is a cross-platform application, so
+SCons is the viable option. You may download and install SCons at
 http://scons.org/download.php, or if you are on a Unix(-like) system, you may
 use your package manager to download SCons instead.
 
