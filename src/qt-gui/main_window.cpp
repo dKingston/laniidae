@@ -78,6 +78,17 @@ MainWindow::create_status_bar(void)
     statusBar()->showMessage(tr("Vi veri universum vivus vici"));
 }
 
+// CLASS METHOD: MainWindow::read_settings()
+// PURPOSE:      Read settings from the configuration file.
+// ARGUMENTS:    None
+// RETURNS:      None
+void *
+MainWindow::read_setting(const QString &section, const QString &name)
+{
+    QSettings settings("etc/laniidae_conf.ini", QSettings::NativeFormat);
+    return settings.value(section, name);
+}
+
 // CLASS METHOD: MainWindow::mount_cdrom_image()
 // PURPOSE:      Called when "File->Mount CD-ROM image" is clicked on by a user.
 // ARGUMENTS:    None
