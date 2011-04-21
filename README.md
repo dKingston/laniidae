@@ -60,9 +60,8 @@ playing your games.
 DOCUMENTATION
 -------------
 
-Due to FOSS's stunning lack of any sort of proper documentation, all of the code
-is documented with Doxygen grammar, and control flow graphs can be generated for
-the core or the GUI.  More on that later.
+Due to FOSS's stunning lack of documentation, you will find the code is extremely
+well documented, both the GUI and the core.
 
 CONTACT AND SUPPORT
 -------------------
