@@ -1,4 +1,5 @@
 build_type = ARGUMENTS.get('build_type', 'debug')
+compiler   = ARGUMENTS.get('compiler', 'clang++')
 cppflags   = None
 
 if build_type == 'release':
@@ -6,7 +7,9 @@ if build_type == 'release':
 elif build_type == 'debug':
     cppflags = ['-O0', '-g', '-ggdb', '-Wall', '-Wextra', '-pedantic']
 
-env = Environment(CPPFLAGS = cppflags)
+env = Environment(CC       = compiler,
+                  CPPFLAGS = cppflags)
+
 Export('env')
 
 SConscript('src/liblaniidae/SConscript')
