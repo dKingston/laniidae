@@ -82,7 +82,7 @@ MainWindow::create_status_bar(void)
 // PURPOSE:      Read settings from the configuration file.
 // ARGUMENTS:    None
 // RETURNS:      None
-void *
+QVariant *
 MainWindow::read_setting(const QString &section, const QString &name)
 {
     QSettings settings("etc/laniidae_conf.ini", QSettings::NativeFormat);
