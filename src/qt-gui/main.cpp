@@ -3,6 +3,8 @@
 // Rights to this code are documented in `docs/LICENSE`.
 
 #include <QApplication>
+#include <QLocale>
+#include <QTranslator>
 #include "main_window.hpp"
 
 // FUNCTION:  main()
