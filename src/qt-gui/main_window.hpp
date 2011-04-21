@@ -6,7 +6,7 @@
 #define QT_GUI_MAIN_WINDOW_HPP
 
 #include <QMainWindow>
-#include <opengl.hpp>
+#include "opengl.hpp"
 
 // Forward class declarations.
 class QAction;
