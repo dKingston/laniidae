@@ -7,7 +7,7 @@ if build_type == 'release':
 elif build_type == 'debug':
     cppflags = ['-O0', '-g', '-ggdb', '-Wall', '-Wextra', '-pedantic']
 
-env = Environment(CC       = compiler,
+env = Environment(CPP      = compiler,
                   CPPFLAGS = cppflags)
 
 Export('env')
