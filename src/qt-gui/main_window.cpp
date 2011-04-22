@@ -5,6 +5,7 @@
 #include <QtGui>
 #include "main_window.hpp"
 #include "opengl.hpp"
+#include "wizard.hpp"
 
 // CLASS METHOD: MainWindow::MainWindow()
 // PURPOSE:      MainWindow constructor
