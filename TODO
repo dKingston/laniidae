@@ -1,0 +1,21 @@
+Legend: [ ] -- No status.
+        [X] -- Complete.
+        [~] -- In progress.
+
+liblaniidae 0.1a:
+-----------------
+    [ ] -- SPU
+    [ ] -- GPU
+    [ ] -- MDEC
+    [ ] -- CDROM
+    [ ] -- CPU        (interpreter)
+    [ ] -- Controller (SCPH-1010)
+    [ ] -- Memory
+    [ ] -- Root counters
+    [ ] -- Memory Card
+
+qt-gui 0.1a:
+------------
+    [~] -- Main window
+    [ ] -- OpenGL drawing
+    [~] -- Wizard
