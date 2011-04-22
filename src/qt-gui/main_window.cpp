@@ -12,14 +12,70 @@
 // RETURNS:      None
 MainWindow::MainWindow(void)
 {
-    opengl = new GLWidget();
-    setCentralWidget(opengl);
-
     create_actions();
     create_menus();
     create_status_bar();
 
-    read_settings();
+    if (!QGLFormat::hasOpenGL() ||
+            !QGLFramebufferObject::hasOpenGLFramebufferObjects())
+    {
+        has_opengl = false;
+
+        QMessageBox box;
+        int ret;
+
+        box.setText(tr("Your system does not support OpenGL."));
+        box.setInformativeText(tr("Would you like to continue without graphics?"));
+
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+        switch ((ret = box.exec()))
+        {
+            case QMessageBox::Yes:
+                break;
+
+            case QMessageBox::No:
+                exit(EXIT_FAILURE);
+                break;
+
+            default:
+                exit(EXIT_FAILURE);
+                break;
+        }
+    }
+    has_opengl = true;
+
+    if (has_opengl)
+    {
+        opengl = new GLWidget();
+        setCentralWidget(opengl);
+    }
+
+    if (!read_setting("misc", "first_time").toBool())
+    {
+        QMessageBox box;
+        int ret;
+
+        box.setText(tr("This is your first time running laniidae."));
+        box.setInformativeText(tr("Would you like to run the first-time setup wizard?"));
+
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox:: No);
+
+        switch ((ret = box.exec()))
+        {
+            case QMessageBox::Yes:
+                Wizard wiz;
+                wiz.show();
+
+                break;
+
+            case QMessageBox::No:
+                break;
+
+            default:
+                break;
+        }
+    }
 }
 
 // CLASS METHOD: MainWindow::~MainWindow()
