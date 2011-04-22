@@ -19,7 +19,7 @@ Wizard::Wizard(QWidget *parent) : QWizard(parent)
     setPage(cdrom,    new CDPage);
 
     setStartId(intro);
-    setOption(HaveHelpButton, true);
+    setOption(NoBackButtonOnStartPage | HaveHelpButton, true);
 
     connect(this, SIGNAL(helpRequested()), this, SLOT(show_help()));
     setWindowTitle(tr("laniidae first-time run wizard"));
