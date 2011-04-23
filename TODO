@@ -24,7 +24,9 @@ In general:
 -----------
     [ ] -- Prevent code reuse among ports
     [ ] -- Set up an in-depth game compatibility list
-    [ ] -- Support coroutines for physical CD-ROM access for non-blocking I/O
+    [ ] -- Support coroutines for physical CD-ROM access for non-blocking
+           (asynchronous) I/O
+
     [ ] -- Reentrancy
     [ ] -- Ensure flawless compilation with g++, clang++, and MSVC
            (in debug and release mode)
