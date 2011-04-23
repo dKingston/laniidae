@@ -60,7 +60,7 @@ MainWindow::MainWindow(void)
         box.setText(tr("This is your first time running laniidae."));
         box.setInformativeText(tr("Would you like to run the first-time setup wizard?"));
 
-        box.setStandardButtons(QMessageBox::Yes | QMessageBox:: No);
+        box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 
         switch ((ret = box.exec()))
         {
