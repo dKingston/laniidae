@@ -1,7 +1,7 @@
 # laniidae -- A (currently WIP) cross-platform PS1 emulator.
 
 This program is "Free and Open Source Software" (FOSS) under the FreeBSD License
-(also known as the 2-clause BSD license), see the LICENSE files for the details.
+(also known as the 2-clause BSD license), see the docs/LICENSE file for the details.
 
 The development tree can be found on [GitHub][].
 [github]: http://github.com/dkingston/laniidae/
