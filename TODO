@@ -19,3 +19,9 @@ qt-gui 0.1a:
     [~] -- Main window
     [ ] -- OpenGL drawing
     [~] -- Wizard
+
+In general:
+-----------
+    [ ] -- Prevent code reuse among ports
+    [ ] -- Set up an in-depth game compatibility list
+    [ ] -- Support coroutines for physical CD-ROM access for non-blocking I/O
