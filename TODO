@@ -30,3 +30,5 @@ In general:
     [ ] -- Reentrancy
     [ ] -- Ensure flawless compilation with g++, clang++, and MSVC
            (in debug and release mode)
+
+    [ ] -- Support DirectX in GUI ports (Qt, GTK, etc, if possible)
