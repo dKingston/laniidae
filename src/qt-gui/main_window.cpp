@@ -135,15 +135,28 @@ MainWindow::create_status_bar(void)
     statusBar()->showMessage(tr("Vi veri universum vivus vici"));
 }
 
-// CLASS METHOD: MainWindow::read_settings()
-// PURPOSE:      Read settings from the configuration file.
+// CLASS METHOD: MainWindow::read_setting()
+// PURPOSE:      Read a setting from the configuration file.
 // ARGUMENTS:    None
-// RETURNS:      None
+// RETURNS:      QVariant *, points to value returned (must use the appropriate
+//               method to convert into boolean/int/etc, see the Qt
+//               documentation here: http://doc.qt.nokia.com/4.7/qvariant.html)
 QVariant *
-MainWindow::read_setting(const QString &section, const QString &name)
+MainWindow::read_setting(const QString& section, const QString& name)
 {
     QSettings settings("etc/laniidae_conf.ini", QSettings::NativeFormat);
     return settings.value(section, name);
+}
+
+// CLASS METHOD: MainWindow::write_setting()
+// PURPOSE:      Write a setting to the configuration file.
+// ARGUMENTS:    None
+// RETURNS:      None
+void
+MainWindow::write_setting(const QString& section, const QVariant& val)
+{
+    QSettings settings("etc/laniidae_conf.ini", QSettings::NativeFormat);
+    settings.setValue(section, val);
 }
 
 // CLASS METHOD: MainWindow::mount_cdrom_image()
