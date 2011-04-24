@@ -2,8 +2,7 @@
 // Copyright (c) 2011 Michael Rodriguez et al.
 // Rights to this code are documented in `docs/LICENSE`.
 
-#ifndef QT_GUI_OPENGL_HPP
-#define QT_GUI_OPENGL_HPP
+#pragma once
 
 #include <QtOpenGL>
 #include <QPainter>
@@ -23,5 +22,3 @@ class GLWidget : public QGLWidget
  protected:
      void paint_event(QPaintEvent *event);
 };
-
-#endif

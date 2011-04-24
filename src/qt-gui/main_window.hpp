@@ -2,8 +2,7 @@
 // Copyright (c) 2011 Michael Rodriguez et al.
 // Rights to this code are documented in `docs/LICENSE`.
 
-#ifndef QT_GUI_MAIN_WINDOW_HPP
-#define QT_GUI_MAIN_WINDOW_HPP
+#pragma once
 
 #include <QMainWindow>
 #include "opengl.hpp"
@@ -45,5 +44,3 @@ class MainWindow : public QMainWindow
     QAction  *conf;
     QAction  *end;
 };
-
-#endif
