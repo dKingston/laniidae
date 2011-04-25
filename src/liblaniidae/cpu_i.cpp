@@ -33,8 +33,8 @@ Interpreter::~Interpreter(void)
 void
 Interpreter::op_lb(void)
 {
-    Byte vaddr = gpr[base] + sign_ext;
-    Byte paddr = translate_address(vaddr);
+    Word vaddr = gpr[base] + sign_ext;
+    Word paddr = translate_address(vaddr);
 }
 
 // CLASS METHOD: Interpreter::op_lbu()
@@ -47,8 +47,8 @@ Interpreter::op_lb(void)
 void
 Interpreter::op_lbu(void)
 {
-    Byte vaddr = gpr[base] + sign_ext;
-    Byte paddr = translate_address(vaddr);
+    Word vaddr = gpr[base] + sign_ext;
+    Word paddr = translate_address(vaddr);
 }
 
 // CLASS METHOD: Interpreter::op_lh()
@@ -61,8 +61,8 @@ Interpreter::op_lbu(void)
 void
 Interpreter::op_lh(void)
 {
-    HWord vaddr = gpr[base] + sign_ext;
-    HWord paddr = translate_address(vaddr);
+    Word vaddr = gpr[base] + sign_ext;
+    Word paddr = translate_address(vaddr);
 }
 
 // CLASS METHOD: Interpreter::op_lhu()
@@ -75,8 +75,8 @@ Interpreter::op_lh(void)
 void
 Interpreter::op_lhu(void)
 {
-    HWord vaddr = gpr[base] + sign_ext;
-    HWord paddr = translate_address(vaddr);
+    Word vaddr = gpr[base] + sign_ext;
+    Word paddr = translate_address(vaddr);
 }
 
 // CLASS METHOD: Interpreter::op_lw()
