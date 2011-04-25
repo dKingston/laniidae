@@ -278,7 +278,7 @@ Interpreter::op_ori(void)
 void
 Interpreter::op_xori(void)
 {
-    gpr[rt] = ~(zero_ext(immediate) | gpr[rs]);
+    gpr[rt] = zero_ext(immediate) ^ gpr[rs];
 }
 
 // CLASS METHOD: Interpreter::op_lui()
@@ -291,4 +291,309 @@ void
 Interpreter::op_lui(void)
 {
     gpr[rt] = immediate << 16;
+}
+
+// CLASS METHOD: Interpreter::op_add()
+// PURPOSE:      Add contents of registers `rs` and `rt` and place 32-bit result
+//               in register `rd`.  Trap on two's complement overflow.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_add(void)
+{
+    Word temp = gpr[rs] + gpr[rt];
+
+    if (arithmetic_overflow(temp))
+    {
+        signal_exc(Ovf);
+        return;
+    }
+    gpr[rd] = temp;
+}
+
+// CLASS METHOD: Interpreter::op_addu()
+// PURPOSE:      Add contents of registers `rs` and `rt` and place 32-bit result
+//               in register `rd`.  Do not trap on overflow.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_addu(void)
+{
+    gpr[rd] = gpr[rs] + gpr[rt];
+}
+
+// CLASS METHOD: Interpreter::op_sub()
+// PURPOSE:      Subtract contents of registers `rt` and `rs` and place 32-bit
+//               result in register `rd`.  Trap on two's complement overflow.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_sub(void)
+{
+    Word temp = gpr[rt] - gpr[rs];
+
+    if (arithmetic_overflow(temp))
+    {
+        signal_exc(Ovf);
+        return;
+    }
+    gpr[rd] = temp;
+}
+
+// CLASS METHOD: Interpreter::op_subu()
+// PURPOSE:      Subtract contents of registers `rt` and `rs` and place 32-bit
+//               result in register `rd`.  Do not trap on overflow.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_subu(void)
+{
+    gpr[rd] = gpr[rt] - gpr[rs];
+}
+
+// CLASS METHOD: Interpreter::op_slt()
+// PURPOSE:      Compare contents of register `rt` to register `rs` (as signed
+//               32-bit integers).  If register `rs` is less than `rt`, result =
+//               1; otherwise, result = 0.  Place result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_slt(void)
+{
+    gpr[rd] = (gpr[rs] < gpr[rt]) ? 1 : 0;
+}
+
+// CLASS METHOD: Interpreter::op_sltu()
+// PURPOSE:      Compare contents of register `rt` to register `rs` (as unsigned
+//               32-bit integers).  If register `rs` is less than `rt`, result =
+//               1; otherwise, result = 0.  Place result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_sltu(void)
+{
+    gpr[rd] = (static_cast<UWord*>(gpr[rs]) < static_cast<UWord*>(gpr[rt])) ? 1 : 0;
+}
+
+// CLASS METHOD: Interpreter::op_and()
+// PURPOSE:      Bit-wise AND contents of registers `rs` and `rt` and place
+//               result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_and(void)
+{
+    gpr[rd] = gpr[rs] & gpr[rt];
+}
+
+// CLASS METHOD: Interpreter::op_or()
+// PURPOSE:      Bit-wise OR contents of registers `rs` and `rt` and place
+//               result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_or(void)
+{
+    gpr[rd] = gpr[rs] | gpr[rt];
+}
+
+// CLASS METHOD: Interpreter::op_xor()
+// PURPOSE:      Bit-wise Exclusive OR contents of registers `rs` and `rt` and
+//               place result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_xor(void)
+{
+    gpr[rd] = gpr[rs] ^ gpr[rt];
+}
+
+// CLASS METHOD: Interpreter::op_nor()
+// PURPOSE:      Bit-wise NOR contents of registers `rs` and `rt` and place
+//               result in register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_nor(void)
+{
+    gpr[rd] = ~(gpr[rs] | gpr[rt]);
+}
+
+// CLASS METHOD: Interpreter::op_sll()
+// PURPOSE:      Shift contents of regsiter `rt` left by `shamt` bits, inserting
+//               zeros into low order bits.  Place 32-bit result in register
+//               `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_sll(void)
+{
+    gpr[rd] = gpr[rt] << shamt;
+}
+
+// CLASS METHOD: Interpreter::op_srl()
+// PURPOSE:      Shift contents of register `rt` right by `shamt` bits,
+//               inserting zeros into high order bits.  Place 32-bit result in
+//               register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_srl(void)
+{
+    gpr[rd] = gpr[rt] >> shamt;
+}
+
+// CLASS METHOD: Interpreter::op_sra()
+// PURPOSE:      Shift contents of register `rt` right by `shamt` bits,
+//               sign-extending the high order bits.  Place 32-bit result in
+//               register `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_sra(void)
+{
+    gpr[rd] = gpr[rt] >> sign_ext(shamt);
+}
+
+// CLASS METHOD: Interpreter::op_sllv()
+// PURPOSE:      Shift contents of register `rt` left.  Low-order 5 bits of
+//               register `rs` specify number of bits to shift.  Insert zeros
+//               into low order bits of `rt` and place 32-bit result in register
+//               `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_sllv(void)
+{
+    gpr[rd] = gpr[rt] << gpr[rs];
+}
+
+// CLASS METHOD: Interpreter::op_srlv()
+// PURPOSE:      Shift contents of ergister `rt` right.  Low-order 5 bits of
+//               register `rs` specify number of bits to shift.  Insert zeros
+//               into low order bits of `rt` and place 32-bit result in register
+//               `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_srlv(void)
+{
+    gpr[rd] = gpr[rt] >> gpr[rs];
+}
+
+// CLASS METHOD: Interpreter::op_srav()
+// PURPOSE:      Shift contents of register `rt` right.  Low-order 5 bits of
+//               register `rs` specify number of bits to shift.  Sign-extend the
+//               high order bits of `rt` and place 32-bit result in register
+//               `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_srav(void)
+{
+    gpr[rd] = gpr[rt] >> sign_ext(gpr[rs]);
+}
+
+// CLASS METHOD: Interpreter::op_mult()
+// PURPOSE:      Multiply contents of registers `rs` and `rt` as twos complement
+//               values.  Place 64-bit result in special registers HI/LO.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_mult(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_multu()
+// PURPOSE:      Multiply contents of registers `rs` and `rt` as unsigned
+//               values.  Place 64-bit result in special registers HI/LO.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_multu(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_div()
+// PURPOSE:      Divide contents of register `rs` by `rt` treating operands as
+//               twos complements values.  Place 32-bit quotient in special
+//               register LO, and 32-bit remainder in HI.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_div(void)
+{
+    gpr[LO] = gpr[rs] / gpr[rt];
+    gpr[HI] = gpr[rs] % gpr[rt];
+}
+
+// CLASS METHOD: Interpreter::op_divu()
+// PURPOSE:      Divide contents of register `rs` by `rt` treating operands as
+//               unsigned values.  Place 32-bit quotient in special register LO,
+//               and 32-bit remainder in HI.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_divu(void)
+{
+    gpr[LO] = static_cast<UWord*>(gpr[rs]) / static_cast<UWord*>(gpr[rt]);
+    gpr[HI] = static_cast<UWord*>(gpr[rs]) % static_cast<UWord*>(gpr[rt]);
+}
+
+// CLASS METHOD: Interpreter::op_mfhi()
+// PURPOSE:      Move contents of special register HI to register `rd`.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_mfhi(void)
+{
+    gpr[rd] = gpr[HI];
+}
+
+// CLASS METHOD: Interpreter::op_mflo()
+// PURPOSE:      Move contents of special register LO to register `rd`.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_mflo(void)
+{
+    gpr[rd] = gpr[LO];
+}
+
+// CLASS METHOD: Interpreter::op_mthi()
+// PURPOSE:      Move contents of special register rd to special register HI.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_mthi(void)
+{
+    gpr[HI] = gpr[rd];
+}
+
+// CLASS METHOD: Interpreter::op_mtlo()
+// PURPOSE:      Move contents of register rd to special register LO.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_mtlo(void)
+{
+    gpr[LO] = gpr[rd];
 }
