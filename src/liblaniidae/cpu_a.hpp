@@ -40,3 +40,6 @@ const Word SR       = 12; // Status Register
 const Word Cause    = 13; // Cause of last exception
 const Word EPC      = 14; // Exception Program Counter
 const Word PRId     = 15; // Processor Revision Identifier
+
+// PRId register value.
+const Word prid_regval = 0x00000230;
