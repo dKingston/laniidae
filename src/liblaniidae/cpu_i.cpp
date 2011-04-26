@@ -597,3 +597,213 @@ Interpreter::op_mtlo(void)
 {
     gpr[LO] = gpr[rd];
 }
+
+// CLASS METHOD: Interpeter::op_j()
+// PURPOSE:      Shift 26-bit target address left two bits, combine with
+//               high-order 4 bits of PC and jump to address with a one
+//               instruction delay.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_j(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_jal()
+// PURPOSE:      Shift 26-bit target address left two bits, combine with
+//               high-order 4 bits of PC and jump to address with a one
+//               instruction delay.  Place address of instruction following
+//               delay slow in r31 (link register).
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_jal(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_jr()
+// PURPOSE:      Jump to address contained in register `rs` with a one
+//               instruction delay.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_jr(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_jalr()
+// PURPOSE:      Jump to address contained in register `rs` with a one
+//               instruction delay.  Place address of instruction following
+//               delay slot in `rd`.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_jalr(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_beq()
+// PURPOSE:      Branch to target address if register `rs` equal to `rt`.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_beq(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bne()
+// PURPOSE:      Branch to target address if register `rs` not equal to `rt`.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_bne(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_blez()
+// PURPOSE:      Branch to target address if register `rs` less than or equal to
+//               0.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_blez(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bgtz()
+// PURPOSE:      Branch to target address if register `rs` greater than 0.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_bgtz(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bltz()
+// PURPOSE:      Branch to target address if register `rs` less than 0.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_bltz(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bgez()
+// PURPOSE:      Branch to target address if register `rs` greater than or equal
+//               to 0.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_bgez(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bltzal()
+// PURPOSE:      Place address of instruction following delay slot in register
+//               r31 (link register).  Branch to target address if register `rs`
+//               less than 0.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_bltzal(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_bgezal()
+// PURPOSE:      Place address of instruction following delay slot in register
+//               r31 (link register).  Branch to target address if register `rs`
+//               is greater than or equal to 0.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_bgezal(void)
+{ }
+
+// CLASS METHOD: Interpreter::op_syscall()
+// PURPOSE:      Initiates system call trap, immediately transferring control to
+//               exception handler.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_syscall(void)
+{
+    signal_exc(Sys);
+}
+
+// CLASS METHOD: Interpreter::op_break()
+// PURPOSE:      Initiates breakpoint trap, immediately transferring control to
+//               exception handler.
+//
+// ARGUMENTS: None.
+// RETURNS:   None.
+void
+Interpreter::op_break(void)
+{
+    signal_exc(Bp);
+}
+
+// CLASS METHOD: Interpreter::op_cop0()
+// PURPOSE:      Co-processor 0 operation.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_cop0(void)
+{
+    if (!(cp0_cpr[Status]) & CU0)
+    {
+        signal_exc(CpU);
+        return;
+    }
+
+    switch (rs)
+    {
+        // Store contents of CPU register `rt` into register `rd`.  This follows
+        // the convention of store operations.
+        case MTC0
+            break;
+
+        // Load CPU register `rt` with contents of CP0 register `rd`.
+        case MFC0:
+            gpr[rt] = cp0_cpr[rd];
+            break;
+
+        // Restore previous interrupt mask and mode bits of status register into
+        // current status bits.  Restore old status bits into previous status
+        // bits.
+        case RFE:
+            break;
+
+        default:
+            break;
+    }
+}
+
+// CLASS METHOD: Interpreter::op_cop2()
+// PURPOSE:      Co-processor 2 operation.
+// ARGUMENTS:    None.
+// RETURNS:      None.
+void
+Interpreter::op_cop2(void)
+{
+    if (!(cp0_cpr[Status]) & CU2)
+    {
+        signal_exc(CpU);
+        return;
+    }
+
+    switch (rs)
+    {
+        // Sign-extend 16-bit `offset` and add to `base` to form address.  Load
+        // contents of addressed word into co-processor register `rt` of
+        // co-processor 2.
+        case LWC2:
+            break;
+
+        // Sign-extend 16-bit `offset` and add to `base` to form address.  Store
+        // contents of co-processor register `rt` from co-processor unit 2 at
+        // addressed memory word.
+        case SWC2:
+            break;
+
+        default:
+            break;
+    }
+}
