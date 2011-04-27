@@ -22,12 +22,12 @@
 // I know these are typedefs to other typedefs, but they make debugging a bit
 // easier to read.  Plus, they sound better, considering this is an emulator.
 // --dKingston
-typedef Word   int32_t;
-typedef UWord  uint32_t;
-typedef HWord  int16_t;
-typedef UHWord uint16_t;
-typedef Byte   int8_t;
-typedef UByte  uint8_t;
+typedef int32_t  Word;
+typedef uint32_t UWord;
+typedef int16_t  HWord;
+typedef uint16_t UHWord;
+typedef int8_t   Byte;
+typedef uint8_t  UByte;
 
 // CP0 special registers.
 const Word Index    = 0;  // Programmable pointer into on-chip TLB array
