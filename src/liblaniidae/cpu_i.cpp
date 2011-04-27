@@ -19,7 +19,6 @@ Interpreter::Interpreter(Memory *m)
 // PURPOSE:      CPU interpreter destructor.
 // ARGUMENTS:    None.
 // RETURNS:      None.
-virtual
 Interpreter::~Interpreter(void)
 { }
 
