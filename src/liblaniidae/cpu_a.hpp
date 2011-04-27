@@ -62,7 +62,7 @@ class CPU
     virtual void exec_instr(Word instr);
 
  public:
-    CPU(Memory *m);
+    CPU(Memory* m);
     virtual ~CPU(void);
     virtual void set_cp0_cpr(Word reg, Word val);
     virtual Word get_cp0_cpr(Word reg);
