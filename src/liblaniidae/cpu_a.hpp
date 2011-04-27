@@ -43,3 +43,30 @@ const Word PRId     = 15; // Processor Revision Identifier
 
 // PRId register value.
 const Word prid_regval = 0x00000230;
+
+class CPU
+{
+ private:
+    Word curr_pc;
+    Word next_pc;
+    Word succ_pc;
+    Word prev_pc;
+    Word curr_instr;
+    Word prev_instr;
+    Word num_cycles;
+    virtual void exec_instr(Word instr);
+
+ public:
+    CPU(void);
+    virtual ~CPU(void);
+    virtual void set_cp0_cpr(Word reg, Word val);
+    virtual Word get_cp0_cpr(Word reg);
+    virtual void set_cp2_cpr(Word reg, Word val);
+    virtual Word get_cp2_cpr(Word reg);
+    virtual void set_cp2_ccr(Word reg, Word val);
+    virtual Word get_cp2_ccr(Word reg);
+    virtual void set_gpr(Word reg, Word val);
+    virtual Word get_gpr(Word reg);
+    virtual void cycle(void);
+    virtual void signal_exc(Word exc);
+};
