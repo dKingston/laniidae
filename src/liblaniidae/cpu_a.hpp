@@ -69,4 +69,6 @@ class CPU
     virtual Word get_gpr(Word reg);
     virtual void cycle(void);
     virtual void signal_exc(Word exc);
+    virtual void branch(const Word address, const Word num_instrs);
+    virtual Word translate_address(Word addr);
 };
