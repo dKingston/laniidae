@@ -55,6 +55,10 @@ class CPU
     Word prev_instr;
     Word next_instr;
     Word num_cycles;
+    Word gpr[32];
+    Word cp0_cpr[32];
+    Word cp2_cpr[32];
+    Word cp2_ccr[32];
     virtual void exec_instr(Word instr);
 
  public:
