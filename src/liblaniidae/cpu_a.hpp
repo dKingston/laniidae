@@ -53,11 +53,12 @@ class CPU
     Word prev_pc;
     Word curr_instr;
     Word prev_instr;
+    Word next_instr;
     Word num_cycles;
     virtual void exec_instr(Word instr);
 
  public:
-    CPU(void);
+    CPU(Memory *m);
     virtual ~CPU(void);
     virtual void set_cp0_cpr(Word reg, Word val);
     virtual Word get_cp0_cpr(Word reg);
