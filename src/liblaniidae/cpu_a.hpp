@@ -46,7 +46,7 @@ const Word prid_regval = 0x00000230;
 
 class CPU
 {
- private:
+ protected:
     Word curr_pc;
     Word next_pc;
     Word succ_pc;
